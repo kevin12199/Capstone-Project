@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmFresh Kenya - Online Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-green: #2e7d32;
+            --secondary-green: #4caf50;
+            --light-green: #e8f5e9;
+            --dark-green: #1b5e20;
+            --accent-orange: #ff9800;
+            --text-dark: #333;
+            --text-light: #666;
+            --background: #f9f9f9;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--primary-green);
+            font-size: 2rem;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            color: var(--primary-green);
+        }
+
+        .logo span {
+            color: var(--accent-orange);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary-green);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .cart-btn, .login-btn {
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .cart-btn {
+            background-color: var(--light-green);
+            color: var(--primary-green);
+            border: none;
+        }
+
+        .login-btn {
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+        }
+
+        .cart-btn:hover, .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-green);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent-orange);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #e68900;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Featured Products Section */
+        .section-title {
+            text-align: center;
+            margin: 60px 0 40px;
+            font-size: 2.2rem;
+            color: var(--primary-green);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .product-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .product-description {
+            color: var(--text-light);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: 15px;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .add-to-cart {
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            font-weight: 600;
+            border-radius: 0 0 8px 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background-color: var(--dark-green);
+        }
+
+        /* Ethics & Privacy Section */
+        .ethics-section {
+            background-color: var(--light-green);
+            padding: 60px 0;
+            margin: 40px 0;
+        }
+
+        .ethics-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .ethics-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .ethics-text h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--dark-green);
+        }
+
+        .ethics-list {
+            list-style: none;
+            margin: 25px 0;
+        }
+
+        .ethics-list li {
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .ethics-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary-green);
+            font-weight: bold;
+        }
+
+        .ethics-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .ethics-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-green);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h4 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--accent-orange);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: var(--accent-orange);
+        }
+
+        .privacy-notice {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* Cookie Consent Banner */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 20px;
+            z-index: 1001;
+            display: none;
+        }
+
+        .cookie-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .cookie-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .cookie-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .accept-cookies {
+            background-color: var(--primary-green);
+            color: white;
+        }
+
+        .reject-cookies {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h2 {
+                font-size: 2.3rem;
+            }
+            
+            .section-title {
+                font-size: 1.9rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+            
+            nav {
+                order: 3;
+                width: 100%;
+                margin-top: 20px;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .cta-button {
+                padding: 12px 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                padding: 70px 0;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.7rem;
+            }
+            
+            .cookie-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cookie Consent Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-content">
+            <div>
+                <p>We use cookies to enhance your experience and in compliance with Kenya's Data Protection Act (2019). By continuing, you consent to our use of cookies. <a href="privacy.html" style="color: #4caf50;">Learn more</a></p>
+            </div>
+            <div class="cookie-buttons">
+                <button class="cookie-btn accept-cookies" id="acceptCookies">Accept</button>
+                <button class="cookie-btn reject-cookies" id="rejectCookies">Reject</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-seedling"></i>
+                    <h1>FarmFresh<span>Kenya</span></h1>
+                </div>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#farmers">For Farmers</a></li>
+                        <li><a href="register.html">Register</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="nav-actions">
+                    <button class="cart-btn">
+                        <i class="fas fa-shopping-cart"></i> Cart (<span id="cartCount">0</span>)
+                    </button>
+                    <button class="login-btn" id="loginBtn">
+                        <i class="fas fa-user"></i> Log In
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Fresh Farm Produce Direct from Kenyan Farmers</h2>
+            <p>Connecting local farmers with consumers through an ethical, transparent marketplace. Supporting sustainable agriculture and fair trade practices across Kenya.</p>
+            <a href="products.html" class="cta-button">Shop Fresh Produce</a>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section class="container">
+        <h2 class="section-title">Today's Fresh Picks</h2>
+        
+        <div class="products-grid" id="featuredProducts">
+            <!-- Product cards will be populated by JavaScript -->
+        </div>
+        
+        <div style="text-align: center; margin-bottom: 60px;">
+            <a href="products.html" class="cta-button" style="background-color: var(--primary-green);">View All Products</a>
+        </div>
+    </section>
+
+    <!-- Ethics & Privacy Section -->
+    <section class="ethics-section" id="ethics">
+        <div class="container">
+            <div class="ethics-content">
+                <div class="ethics-text">
+                    <h3>Our Commitment to Ethics & Privacy</h3>
+                    <p>At FarmFresh Kenya, we operate with transparency and respect for both our farmers and customers. We adhere to Kenya's digital laws and ethical guidelines to ensure a safe marketplace for all.</p>
+                    
+                    <ul class="ethics-list">
+                        <li><strong>Data Protection:</strong> Compliant with Kenya's Data Protection Act (2019)</li>
+                        <li><strong>Fair Pricing:</strong> Transparent pricing with fair compensation to farmers</li>
+                        <li><strong>Secure Transactions:</strong> Protection in line with Computer Misuse and Cybercrimes Act (2018)</li>
+                        <li><strong>Informed Consent:</strong> Clear privacy notices and user consent for data collection</li>
+                        <li><strong>Sustainable Practices:</strong> Supporting eco-friendly farming methods</li>
+                    </ul>
+                    
+                    <p>We follow guidelines from the Office of the Data Protection Commissioner (ODPC) and National ICT Policy (2019) to ensure ethical digital practices.</p>
+                    
+                    <a href="privacy.html" class="cta-button" style="background-color: var(--dark-green); margin-top: 20px; display: inline-block;">Read Our Privacy Policy</a>
+                </div>
+                
+                <div class="ethics-image">
+                    <img src="https://images.unsplash.com/photo-1560493676-04071c5f467b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Kenyan farmers with fresh produce">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>FarmFresh Kenya</h4>
+                    <p>Connecting Kenyan farmers directly with consumers for fresh, affordable produce while upholding the highest standards of ethics and data privacy.</p>
+                    <div class="privacy-notice">
+                        <p><strong>Privacy Notice:</strong> We collect and process personal data in compliance with Kenya's Data Protection Act (2019). You have the right to access, correct, or delete your data.</p>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="register.html">Register</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Legal & Compliance</h4>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Data Protection</a></li>
+                        <li><a href="#">Farmer Agreements</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</li>
+                        <li><i class="fas fa-phone"></i> +254 700 123 456</li>
+                        <li><i class="fas fa-envelope"></i> info@farmfreshkenya.co.ke</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 FarmFresh Kenya. All rights reserved. | Compliant with Kenya's Data Protection Act (2019) and Computer Misuse and Cybercrimes Act (2018)</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for the FarmFresh Kenya marketplace
+        
+        // Featured products data
+        const featuredProducts = [
+            {
+                id: 1,
+                name: "Organic Avocados",
+                description: "Fresh Hass avocados from Nyeri County",
+                price: 80,
+                unit: "each",
+                farmer: "Green Valley Farm",
+                location: "Nyeri",
+                image: "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 2,
+                name: "Fresh Kale (Sukuma Wiki)",
+                description: "Locally grown, pesticide-free kale",
+                price: 50,
+                unit: "bunch",
+                farmer: "Mwangi Family Farm",
+                location: "Kiambu",
+                image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 3,
+                name: "Ripe Mangoes",
+                description: "Sweet Kent mangoes from the coast",
+                price: 40,
+                unit: "each",
+                farmer: "Coastal Fruits Co-op",
+                location: "Kilifi",
+                image: "https://images.unsplash.com/photo-1553279768-865429fa0078?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w-800&q=80"
+            },
+            {
+                id: 4,
+                name: "Organic Tomatoes",
+                description: "Vine-ripened tomatoes from Nakuru",
+                price: 120,
+                unit: "kg",
+                farmer: "Rift Valley Growers",
+                location: "Nakuru",
+                image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+            }
+        ];
+
+        // Cart count
+        let cartCount = 0;
+
+        // Cookie functions
+        function setCookie(name, value, days) {
+            const d = new Date();
+            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + d.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/;SameSite=Lax";
+        }
+
+        function getCookie(name) {
+            const cname = name + "=";
+            const decodedCookie = decodeURIComponent(document.cookie);
+            const ca = decodedCookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(cname) === 0) {
+                    return c.substring(cname.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        // Check if cookie consent has been given
+        function checkCookieConsent() {
+            const cookieConsent = getCookie("farmfresh_cookie_consent");
+            if (cookieConsent === "") {
+                // Show cookie banner after 2 seconds
+                setTimeout(() => {
+                    document.getElementById("cookieBanner").style.display = "block";
+                }, 2000);
+            } else if (cookieConsent === "accepted") {
+                // Set a user identifier cookie (simplified for demo)
+                const userId = getCookie("farmfresh_user_id");
+                if (userId === "") {
+                    // Generate a simple user ID (in production, this would be done server-side)
+                    const randomId = "user_" + Math.floor(Math.random() * 10000);
+                    setCookie("farmfresh_user_id", randomId, 30);
+                }
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load featured products
+            const productsGrid = document.getElementById('featuredProducts');
+            
+            featuredProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-description">${product.description}</p>
+                        <div class="product-price">KSh ${product.price} / ${product.unit}</div>
+                        <div class="product-meta">
+                            <span><i class="fas fa-user"></i> ${product.farmer}</span>
+                            <span><i class="fas fa-map-marker-alt"></i> ${product.location}</span>
+                        </div>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart(${product.id})">
+                        <i class="fas fa-cart-plus"></i> Add to Cart
+                    </button>
+                `;
+                productsGrid.appendChild(productCard);
+            });
+
+            // Mobile menu toggle
+            document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+                const nav = document.getElementById('mainNav');
+                nav.classList.toggle('active');
+                
+                // Change icon
+                const icon = this.querySelector('i');
+                if (icon.classList.contains('fa-bars')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+
+            // Login button functionality
+            document.getElementById('loginBtn').addEventListener('click', function() {
+                alert("Login functionality would connect to backend in a full application. For this demo, you can register via the Registration page.");
+                window.location.href = "register.html";
+            });
+
+            // Cookie consent buttons
+            document.getElementById('acceptCookies').addEventListener('click', function() {
+                setCookie("farmfresh_cookie_consent", "accepted", 365);
+                document.getElementById('cookieBanner').style.display = "none";
+                
+                // Set a user identifier cookie
+                const randomId = "user_" + Math.floor(Math.random() * 10000);
+                setCookie("farmfresh_user_id", randomId, 30);
+                
+                alert("Thank you for accepting cookies. We use them to improve your experience in compliance with Kenya's Data Protection Act (2019).");
+            });
+
+            document.getElementById('rejectCookies').addEventListener('click', function() {
+                setCookie("farmfresh_cookie_consent", "rejected", 30);
+                document.getElementById('cookieBanner').style.display = "none";
+                alert("You have rejected cookies. Some website features may be limited.");
+            });
+
+            // Check for existing cart items
+            const savedCart = localStorage.getItem('farmfresh_cart');
+            if (savedCart) {
+                cartCount = JSON.parse(savedCart).length;
+                updateCartCount();
+            }
+
+            // Check cookie consent on page load
+            checkCookieConsent();
+        });
+
+        // Cart functionality
+        function addToCart(productId) {
+            cartCount++;
+            updateCartCount();
+            
+            // Get product details
+            const product = featuredProducts.find(p => p.id === productId);
+            
+            // Save to localStorage (simulating cart storage)
+            let cart = JSON.parse(localStorage.getItem('farmfresh_cart')) || [];
+            cart.push({
+                id: productId,
+                name: product.name,
+                price: product.price,
+                addedAt: new Date().toISOString()
+            });
+            localStorage.setItem('farmfresh_cart', JSON.stringify(cart));
+            
+            // Show confirmation
+            alert(`Added ${product.name} to cart!`);
+        }
+
+        function updateCartCount() {
+            document.getElementById('cartCount').textContent = cartCount;
+        }
+    </script>
+</body>
+</html>
