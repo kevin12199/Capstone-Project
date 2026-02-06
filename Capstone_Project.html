@@ -40,7 +40,7 @@
             padding: 0 20px;
         }
 
-        /* Header Styles */
+        
         header {
             background-color: var(--white);
             box-shadow: var(--shadow);
@@ -134,7 +134,7 @@
             cursor: pointer;
         }
 
-        /* Hero Section */
+        
         .hero {
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
             background-size: cover;
@@ -174,7 +174,7 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
 
-        /* Featured Products Section */
+        
         .section-title {
             text-align: center;
             margin: 60px 0 40px;
@@ -254,7 +254,7 @@
             background-color: var(--dark-green);
         }
 
-        /* Ethics & Privacy Section */
+        
         .ethics-section {
             background-color: var(--light-green);
             padding: 60px 0;
@@ -312,7 +312,7 @@
             display: block;
         }
 
-        /* Footer */
+        
         footer {
             background-color: var(--dark-green);
             color: white;
@@ -365,7 +365,7 @@
             color: #aaa;
         }
 
-        /* Cookie Consent Banner */
+        
         .cookie-banner {
             position: fixed;
             bottom: 0;
@@ -412,7 +412,7 @@
             border: 1px solid white;
         }
 
-        /* Responsive Design */
+        
         @media (max-width: 992px) {
             .hero h2 {
                 font-size: 2.3rem;
@@ -495,7 +495,7 @@
         </div>
     </div>
 
-    <!-- Header -->
+    
     <header>
         <div class="container">
             <div class="header-content">
@@ -530,7 +530,7 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
+    
     <section class="hero">
         <div class="container">
             <h2>Fresh Farm Produce Direct from Kenyan Farmers</h2>
@@ -539,12 +539,12 @@
         </div>
     </section>
 
-    <!-- Featured Products Section -->
+    
     <section class="container">
         <h2 class="section-title">Today's Fresh Picks</h2>
         
         <div class="products-grid" id="featuredProducts">
-            <!-- Product cards will be populated by JavaScript -->
+            
         </div>
         
         <div style="text-align: center; margin-bottom: 60px;">
@@ -552,7 +552,7 @@
         </div>
     </section>
 
-    <!-- Ethics & Privacy Section -->
+    
     <section class="ethics-section" id="ethics">
         <div class="container">
             <div class="ethics-content">
@@ -580,7 +580,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -629,9 +629,9 @@
     </footer>
 
     <script>
-        // JavaScript for the FarmFresh Kenya marketplace
         
-        // Featured products data
+        
+        
         const featuredProducts = [
             {
                 id: 1,
@@ -675,10 +675,10 @@
             }
         ];
 
-        // Cart count
+        
         let cartCount = 0;
 
-        // Cookie functions
+        
         function setCookie(name, value, days) {
             const d = new Date();
             d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
@@ -702,28 +702,28 @@
             return "";
         }
 
-        // Check if cookie consent has been given
+        
         function checkCookieConsent() {
             const cookieConsent = getCookie("farmfresh_cookie_consent");
             if (cookieConsent === "") {
-                // Show cookie banner after 2 seconds
+                
                 setTimeout(() => {
                     document.getElementById("cookieBanner").style.display = "block";
                 }, 2000);
             } else if (cookieConsent === "accepted") {
-                // Set a user identifier cookie (simplified for demo)
+                
                 const userId = getCookie("farmfresh_user_id");
                 if (userId === "") {
-                    // Generate a simple user ID (in production, this would be done server-side)
+                    
                     const randomId = "user_" + Math.floor(Math.random() * 10000);
                     setCookie("farmfresh_user_id", randomId, 30);
                 }
             }
         }
 
-        // Initialize page
+        
         document.addEventListener('DOMContentLoaded', function() {
-            // Load featured products
+            
             const productsGrid = document.getElementById('featuredProducts');
             
             featuredProducts.forEach(product => {
@@ -747,12 +747,12 @@
                 productsGrid.appendChild(productCard);
             });
 
-            // Mobile menu toggle
+            
             document.getElementById('mobileMenuBtn').addEventListener('click', function() {
                 const nav = document.getElementById('mainNav');
                 nav.classList.toggle('active');
                 
-                // Change icon
+                
                 const icon = this.querySelector('i');
                 if (icon.classList.contains('fa-bars')) {
                     icon.classList.remove('fa-bars');
@@ -763,18 +763,18 @@
                 }
             });
 
-            // Login button functionality
+            
             document.getElementById('loginBtn').addEventListener('click', function() {
                 alert("Login functionality would connect to backend in a full application. For this demo, you can register via the Registration page.");
                 window.location.href = "register.html";
             });
 
-            // Cookie consent buttons
+            
             document.getElementById('acceptCookies').addEventListener('click', function() {
                 setCookie("farmfresh_cookie_consent", "accepted", 365);
                 document.getElementById('cookieBanner').style.display = "none";
                 
-                // Set a user identifier cookie
+                
                 const randomId = "user_" + Math.floor(Math.random() * 10000);
                 setCookie("farmfresh_user_id", randomId, 30);
                 
@@ -787,26 +787,26 @@
                 alert("You have rejected cookies. Some website features may be limited.");
             });
 
-            // Check for existing cart items
+            
             const savedCart = localStorage.getItem('farmfresh_cart');
             if (savedCart) {
                 cartCount = JSON.parse(savedCart).length;
                 updateCartCount();
             }
 
-            // Check cookie consent on page load
+            
             checkCookieConsent();
         });
 
-        // Cart functionality
+        
         function addToCart(productId) {
             cartCount++;
             updateCartCount();
             
-            // Get product details
+            
             const product = featuredProducts.find(p => p.id === productId);
             
-            // Save to localStorage (simulating cart storage)
+            
             let cart = JSON.parse(localStorage.getItem('farmfresh_cart')) || [];
             cart.push({
                 id: productId,
@@ -816,7 +816,7 @@
             });
             localStorage.setItem('farmfresh_cart', JSON.stringify(cart));
             
-            // Show confirmation
+         
             alert(`Added ${product.name} to cart!`);
         }
 
